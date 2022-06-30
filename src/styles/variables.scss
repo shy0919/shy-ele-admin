@@ -1,0 +1,24 @@
+// sidebar Width
+$sideBarWidth: 220px;
+
+// 主背景调整
+$menuBg: #409eff;
+$menuText: #d9e7e4;
+$menuActiveText: #eafc01;
+
+$subMenuActiveText: #f4f4f5;
+
+$menuHover: #657458;
+$subMenuBg: #314b64;
+$subMenuHover: #6c8d56;
+
+:export {
+  menuText: $menuText;
+  menuActiveText: $menuActiveText;
+  subMenuActiveText: $subMenuActiveText;
+  menuBg: $menuBg;
+  menuHover: $menuHover;
+  subMenuBg: $subMenuBg;
+  subMenuHover: $subMenuHover;
+  sideBarWidth: $sideBarWidth;
+}

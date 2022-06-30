@@ -1,0 +1,40 @@
+// fade
+
+.slide-leave-active,
+.slide-enter-active {
+  transition: all 0.5s ease;
+}
+// vue2=>vue3 元素初始位置:slide-enter=>slide-enter-from
+.slide-enter-from,
+.slide-leave-to {
+  top: -100%;
+  opacity: 0;
+}
+
+// scale
+.scale-enter-from,
+.scale-leave-to {
+  transform: scale(0);
+}
+.scale-leave-from,
+.scale-enter-to {
+  transform: scale(1);
+}
+.scale-enter-active,
+.scale-leave-active {
+  transition: all 0.5s;
+}
+
+// left(right/top)
+.left-enter-from,
+.left-leave-to {
+  transform: translate3d(-100%, 0, 0);
+}
+.left-leave-from,
+.left-enter-to {
+  transform: translate3d(0, 0, 0);
+}
+.left-enter-active,
+.left-leave-active {
+  transition: all 0.5s;
+}
