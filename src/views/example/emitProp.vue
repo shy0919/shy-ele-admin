@@ -1,6 +1,6 @@
 <template>
   <el-button class="emit" @click="son()">
-    son
+    点击修改echarts数据
   </el-button>
 </template>
 
@@ -12,4 +12,5 @@ const son = () => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
