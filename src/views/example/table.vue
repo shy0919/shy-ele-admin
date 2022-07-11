@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import emitProp from './emitProp.vue'
+import emitProp from './components/emitProp.vue'
 import ChartCompoent from './components/ChartCompoent'
 const sonprop = () => {
   console.log('111')
