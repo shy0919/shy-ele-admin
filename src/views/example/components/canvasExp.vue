@@ -14,14 +14,19 @@
 </template>
 
 <script setup type="text/javascript" defer=true>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineProps, toRefs } from 'vue'
 
+const props = defineProps({
+  isRect: Boolean
+})
+const { isRect } = toRefs(props)
+// console.log(isRect.value)
 // 画图相关
 // 画布宽高
 const canvasWidth = ref(1050)
 const canvasHeight = ref(550)
 // 画点数量
-let pointNum = 10
+let pointNum = isRect.value ? 2 : 10
 
 // 点的范围
 const pointRange = ref(10)
@@ -33,11 +38,11 @@ const pointRangeDrag = ref(50)
 const colorVal = ref('rgba(255,0,0,1)')
 
 // 填充颜色
-const colorValA = ref('rgba(255,0,0,.5)')
+const colorValA = ref('rgba(255,0,0,.1)')
 // 坐标文字颜色
 const colorValPoint = ref('rgba(0,255,0,1)')
 // 线条粗细,画笔大小
-const lineWidthVal = ref(4)
+const lineWidthVal = ref(2)
 // 人的坐标数组
 // const personArr = ref([0.13, 24, 15, 23])
 
@@ -57,10 +62,12 @@ const dragPosition = ref(-1)
 
 const pointArr = ref([])
 
+// 清除
 const clearView = () => {
   ctxGragh.clearRect(0, 0, canGraph.width, canGraph.height)
   ctxPoint.clearRect(0, 0, canPoint.width, canPoint.height)
   pointArr.value = []
+  pointNum = isRect.value ? 2 : 10
 }
 
 // canOnClick
@@ -84,7 +91,7 @@ const canOnClick = (e) => {
           piY <= pointArr.value[i].y + pointRange.value
         ) {
           // 判断为同一点，不存储
-          console.log('此点已存在')
+          // console.log('此点已存在')
           isExist = true
           break
         }
@@ -98,7 +105,7 @@ const canOnClick = (e) => {
 }
 
 const canOnmouseUp = (e) => {
-  console.log('鼠标抬起', e)
+  // console.log('鼠标抬起', e)
   if (isDrag.value) {
     // 这里来减少点
     pointArrMerge()
@@ -127,7 +134,7 @@ const canOnmouseMove = (e) => {
   pointShow(piX, piY)
 
   // 判断是否是拖动
-  if (isMouseDown.value && isMouseMove.value && !isMouseUp.value) {
+  if (isMouseDown.value && isMouseMove.value && !isMouseUp.value && !isRect.value) {
     if (isDrag.value) {
       drawDragArea(piX, piY)
     } else {
@@ -136,7 +143,7 @@ const canOnmouseMove = (e) => {
   }
 }
 const canOnmouseDown = (e) => {
-  console.log('鼠标按下', e)
+  // console.log('鼠标按下', e)
 }
 
 // ============================
@@ -156,7 +163,7 @@ const pointArrMerge = () => {
   }
 }
 
-// 鼠標下畫點
+// 鼠标下画点
 const dot = (x, y) => {
   ctxPoint.clearRect(0, 0, canPoint.width, canPoint.height)
   ctxPoint.beginPath()
@@ -170,23 +177,50 @@ const drawArea = () => {
   ctxGragh.clearRect(0, 0, canGraph.width, canGraph.height)
   ctxGragh.beginPath()
   ctxGragh.moveTo(pointArr.value[0].x, pointArr.value[0].y)
-  console.log(0, pointArr.value[0].x, pointArr.value[0].y)
-  for (let i = 1; i < pointArr.value.length; i++) {
-    ctxGragh.lineTo(pointArr.value[i].x, pointArr.value[i].y)
-    console.log(i, pointArr.value[i].x, pointArr.value[i].y)
+  if (isRect.value) {
+    ctxGragh.lineTo(pointArr.value[0].x, pointArr.value[1].y)
+    ctxGragh.lineTo(pointArr.value[1].x, pointArr.value[1].y)
+    ctxGragh.lineTo(pointArr.value[1].x, pointArr.value[0].y)
+  } else {
+    for (let i = 1; i < pointArr.value.length; i++) {
+      ctxGragh.lineTo(pointArr.value[i].x, pointArr.value[i].y)
+    }
   }
   ctxGragh.strokeStyle = colorVal.value
   ctxGragh.fillStyle = colorValA.value
   ctxGragh.lineWidth = lineWidthVal.value
   ctxGragh.closePath()
   ctxGragh.stroke()
-  ctxGragh.fill()
+  // ctxGragh.fill()
+}
+
+// 画移动的矩形
+const drawMoveRect = (x, y) => {
+  ctxGragh.beginPath()
+  ctxGragh.moveTo(pointArr.value[0].x, pointArr.value[0].y)
+  if (x <= 0) {
+    x = 0
+  }
+  ctxGragh.lineTo(pointArr.value[0].x, y)
+  ctxGragh.lineTo(x, y)
+  ctxGragh.lineTo(x, pointArr.value[0].y)
+  // ctxGragh.lineTo(x, y)
+  ctxGragh.strokeStyle = colorVal.value
+  ctxGragh.fillStyle = colorValA.value
+  ctxGragh.lineWidth = lineWidthVal.value
+  ctxGragh.closePath()
+  ctxGragh.stroke()
 }
 
 // 画移动的区域
 const drawMoveArea = (x, y) => {
+  // console.log(x, y)
   if (pointArr.value.length > 0 && pointArr.value.length < pointNum) {
     ctxGragh.clearRect(0, 0, canGraph.width, canGraph.height)
+    if (isRect.value) {
+      drawMoveRect(x, y)
+      return
+    }
     ctxGragh.beginPath()
     ctxGragh.moveTo(pointArr.value[0].x, pointArr.value[0].y)
     for (let i = 1; i < pointArr.value.length; i++) {
@@ -201,7 +235,7 @@ const drawMoveArea = (x, y) => {
     ctxGragh.lineWidth = lineWidthVal.value
     ctxGragh.closePath()
     ctxGragh.stroke()
-    ctxGragh.fill()
+    // ctxGragh.fill()
   }
 }
 
@@ -244,7 +278,7 @@ const textCanShow = (x, y, text) => {
   } else {
     ctxPoint.textBaseline = 'top'
   }
-  ctxPoint.font = "normal 18pt '黑体'"
+  ctxPoint.font = "normal 12pt '黑体'"
   ctxPoint.fillStyle = colorValPoint.value
   ctxPoint.fillText(text, x, y)
   // 右上角
@@ -253,7 +287,7 @@ const textCanShow = (x, y, text) => {
 }
 
 const dragPoint = (x, y) => {
-  console.log('拖动')
+  // console.log('拖动')
   for (let i = 0; i < pointArr.value.length; i++) {
     if (
       x >= pointArr.value[i].x - pointRangeDrag.value &&
@@ -263,7 +297,7 @@ const dragPoint = (x, y) => {
     ) {
       dragPosition.value = i
       isDrag.value = true
-      console.log('拖动', i)
+      // console.log('拖动', i)
     }
   }
 }
@@ -335,6 +369,7 @@ onMounted(() => {
     canPoint.onmousemove = (e) => {
       isMouseMove.value = true
       // console.log("鼠标移动",e);
+      // if (isRect.value) return
       canOnmouseMove(e)
     }
     canPoint.onmousedown = (e) => {
@@ -348,8 +383,9 @@ onMounted(() => {
       canOnClick(e)
     }
     canPoint.oncontextmenu = (e) => {
-      console.log('鼠标右键', e)
+      // console.log('鼠标右键', e)
       // canOnClick(e)
+      if (isRect.value) return false
       pointNum = pointArr.value.length
       drawArea()
       // 屏蔽浏览器自带右键菜单
@@ -365,11 +401,14 @@ onMounted(() => {
   position: relative;
   height: 550px;
 }
-#graphCanvas ,#personCanvas{
+
+#graphCanvas,
+#personCanvas {
   position: absolute;
   left: 0;
   top: 0;
 }
+
 #pointCanvas {
   position: absolute;
   left: 0;
@@ -377,5 +416,4 @@ onMounted(() => {
   border: 1px solid red;
   cursor: crosshair;
 }
-
 </style>

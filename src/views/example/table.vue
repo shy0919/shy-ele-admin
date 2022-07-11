@@ -10,7 +10,7 @@
 <script setup>
 import { ref } from 'vue'
 import emitProp from './emitProp.vue'
-import ChartCompoent from './ChartCompoent'
+import ChartCompoent from './components/ChartCompoent'
 const sonprop = () => {
   console.log('111')
   option.value.series[0].data[0].value -= 300

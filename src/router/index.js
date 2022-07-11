@@ -40,7 +40,7 @@ const routes = [
       {
         path: 'chart',
         name: 'Chart',
-        component: () => import('@/views/example/chart'),
+        component: () => import('@/views/example/canvasRect'),
         meta: { title: '图例' }
       }
     ]
@@ -62,6 +62,12 @@ const routes = [
         name: 'Require',
         component: () => import('@/views/project/require'),
         meta: { title: '需求' }
+      },
+      {
+        path: 'fabric',
+        name: 'Fabric',
+        component: () => import('@/views/project/fabric'),
+        meta: { title: 'fabric' }
       }
     ]
   }
