@@ -14,6 +14,7 @@ const props = defineProps({
 const { option } = toRefs(props)
 
 let myChart = null
+
 const initChart = () => {
   const chartDom = document.getElementById('main')
   myChart = echarts.init(chartDom)
