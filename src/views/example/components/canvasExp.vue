@@ -42,6 +42,7 @@ const colorValA = ref('rgba(255,0,0,.1)')
 
 // 坐标文字颜色
 const colorValPoint = ref('rgba(0,255,0,1)')
+
 // 线条粗细,画笔大小
 const lineWidthVal = ref(2)
 // 人的坐标数组
