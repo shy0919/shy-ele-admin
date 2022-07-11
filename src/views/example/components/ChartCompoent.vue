@@ -9,7 +9,9 @@ import * as echarts from 'echarts'
 const props = defineProps({
   // 关闭es-lint对option的默认类型检测，
   // eslint-disable-next-line vue/require-default-prop
-  option: Object
+  option: {
+    type: Object
+  }
 })
 const { option } = toRefs(props)
 
