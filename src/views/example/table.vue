@@ -12,7 +12,7 @@ import { ref } from 'vue'
 import emitProp from './components/emitProp.vue'
 import ChartCompoent from './components/ChartCompoent'
 const sonprop = () => {
-  console.log('111')
+  // console.log('111')
   option.value.series[0].data[0].value -= 300
 }
 const option = ref({
