@@ -11,15 +11,18 @@ const props = defineProps({
   // eslint-disable-next-line vue/require-default-prop
   option: {
     type: Object
+  },
+  isDark: {
+    type: Boolean
   }
 })
-const { option } = toRefs(props)
+const { option, isDark } = toRefs(props)
 
 let myChart = null
 
 const initChart = () => {
   const chartDom = document.getElementById('main')
-  myChart = echarts.init(chartDom)
+  myChart = echarts.init(chartDom, isDark.value ? 'dark' : '')
   // option要去掉代理才能传入setOption,可以通过重新调用setOption来绘制新图
   myChart.setOption(option.value)
 
@@ -31,6 +34,12 @@ const initChart = () => {
 // 监听传入option变化 重新调用setOption来重新绘制
 watch(() => option, (newValue, preValue) => {
   myChart.setOption(option.value)
+}, { deep: true })
+
+watch(isDark, (newValue, preValue) => {
+  // console.log(isDark.value)
+  myChart.dispose()
+  initChart()
 }, { deep: true })
 
 onMounted(() => {

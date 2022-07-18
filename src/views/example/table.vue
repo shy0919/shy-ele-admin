@@ -2,8 +2,9 @@
   <div>
     <emit-prop @son="sonprop" />
     <div class="chart">
-      <ChartCompoent :option="option" />
+      <ChartCompoent :option="option" :is-dark="isDark" />
     </div>
+    <el-button type="primary" @click="isDark = !isDark">切换eCharts暗黑模式</el-button>
   </div>
 </template>
 
@@ -15,6 +16,9 @@ const sonprop = () => {
   // console.log('111')
   option.value.series[0].data[0].value -= 300
 }
+
+const isDark = ref(false)
+
 const option = ref({
   title: {
     text: 'Referer of a Website',
