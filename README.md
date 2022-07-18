@@ -1,24 +1,14 @@
-# vue3-ele-admin
+# vue3-ele-admin——这是一个练手和测试的vue3后台
+## <font color=pink>当前建议使用yarn安装依赖和启动项目</font>
+## 当前包含：
+- 根据路由生成侧边栏导航及面包屑导航；
+- 一个简单的自定义指令实现按钮权限；
+- 一个简易音乐播放器（audio标签套壳）；
+- 用轮播做的图片墙（传入图片即可下一张，超过宽度会移除之前的图片）；
+- 二次封装的eCharts组件（只需传入options即可，会根据页面变化调整大小和更新数据）；
+- 原生canvas绘图，最多十边形的多边形（默认为两点绘制矩形）
+- fabric做的画布；
+- 待我学完新东西后继续更新...
+## 2022/7/18
+  今日修改内容：给canvas画图增加按钮，使其可变更为最多十边形的多边形绘图（默认为两点绘制矩形）
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
