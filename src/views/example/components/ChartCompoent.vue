@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { onMounted, defineProps, toRefs, watch } from 'vue'
+import { onMounted, defineProps, toRefs, watch, unref } from 'vue'
 import * as echarts from 'echarts'
 
 const props = defineProps({
@@ -23,9 +23,9 @@ let myChart = null
 const initChart = () => {
   const chartDom = document.getElementById('main')
   myChart = echarts.init(chartDom, isDark.value ? 'dark' : '')
-  // option要去掉代理才能传入setOption,可以通过重新调用setOption来绘制新图
-  myChart.setOption(option.value)
-
+  // option要去掉代理才能传入setOption,可以通过重新调用setOption来绘制新图; vue3拿ref的值也可以用unref(),unref(ref) === isRef(ref) ? ref.value:ref
+  myChart.setOption(unref(option))
+  // 添加监听事件，使charts跟随页面大小重绘
   window.addEventListener('resize', () => {
     myChart.resize()
   })
@@ -36,11 +36,12 @@ watch(() => option, (newValue, preValue) => {
   myChart.setOption(option.value)
 }, { deep: true })
 
+// 监听isDark,变更是否暗黑模式
 watch(isDark, (newValue, preValue) => {
-  // console.log(isDark.value)
+  // 销毁echarts实例后重新初始化
   myChart.dispose()
   initChart()
-}, { deep: true })
+})
 
 onMounted(() => {
   initChart()
@@ -52,6 +53,6 @@ onMounted(() => {
 #main {
   width: 100%;
   height: 100%;
-  background-color: #ddd;
+  // background-color: #ddd;
 }
 </style>
