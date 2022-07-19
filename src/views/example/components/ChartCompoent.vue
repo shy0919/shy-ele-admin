@@ -1,5 +1,5 @@
 <template>
-  <div id="main" />
+  <div :id="propId" class="main" />
 </template>
 
 <script setup>
@@ -14,14 +14,19 @@ const props = defineProps({
   },
   isDark: {
     type: Boolean
+  },
+  // 通过传入不同的id来绑定不同的chart
+  // eslint-disable-next-line vue/require-default-prop
+  propId: {
+    type: String
   }
 })
-const { option, isDark } = toRefs(props)
-
+const { option, isDark, propId } = toRefs(props)
+// console.log(propId.value)
 let myChart = null
 
 const initChart = () => {
-  const chartDom = document.getElementById('main')
+  const chartDom = document.getElementById(`${propId.value}`)
   myChart = echarts.init(chartDom, isDark.value ? 'dark' : '')
   // option要去掉代理才能传入setOption,可以通过重新调用setOption来绘制新图; vue3拿ref的值也可以用unref(),unref(ref) === isRef(ref) ? ref.value:ref
   myChart.setOption(unref(option))
@@ -44,13 +49,15 @@ watch(isDark, (newValue, preValue) => {
 })
 
 onMounted(() => {
-  initChart()
+  setTimeout(() => {
+    initChart()
+  })
 })
 
 </script>
 
 <style scoped lang="scss">
-#main {
+.main {
   width: 100%;
   height: 100%;
   // background-color: #ddd;

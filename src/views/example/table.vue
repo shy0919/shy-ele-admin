@@ -2,9 +2,12 @@
   <div>
     <emit-prop @son="sonprop" />
     <div class="chart">
-      <ChartCompoent :option="option" :is-dark="isDark" />
+      <ChartCompoent :option="option" :is-dark="isDark" prop-id="chart1" />
     </div>
     <el-button type="primary" @click="isDark = !isDark">切换eCharts暗黑模式</el-button>
+    <div class="chart">
+      <ChartCompoent :option="option" :is-dark="isDark" prop-id="chart2" />
+    </div>
   </div>
 </template>
 
