@@ -26,6 +26,18 @@ const routes = [
     ]
   },
   {
+    path: '/func',
+    component: Layout,
+    redirect: '/func/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/func/index'),
+        meta: { title: 'function', icon: 'icon-aislogo' }
+      }
+    ]
+  },
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
