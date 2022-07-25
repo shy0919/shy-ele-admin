@@ -38,7 +38,9 @@ const initChart = () => {
 
 // 监听传入option变化 重新调用setOption来重新绘制
 watch(() => option, (newValue, preValue) => {
-  myChart.setOption(option.value)
+  // myChart.setOption(option.value)
+  myChart.dispose()
+  initChart()
 }, { deep: true })
 
 // 监听isDark,变更是否暗黑模式
