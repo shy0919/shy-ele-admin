@@ -1,6 +1,5 @@
 <template>
   <div>
-    首页
     <el-button v-permission="['low', 'editor', 'super', 'admin']">
       low
     </el-button>
@@ -20,11 +19,18 @@
       <el-button>组件导出excel</el-button>
     </vue3-json-excel>
     <el-button @click="exportExcel()">xlsx导出excel</el-button>
+    <div>
+      {{ store.otherStoreCount }}
+    </div>
+    <el-button @click="store.countPlusOneAsync">延时一秒 store的count++</el-button>
   </div>
 </template>
 
 <script setup>
 import { ref, onBeforeMount, onMounted } from "vue"
+import { useStore } from "@/store/index.js";
+
+const store = useStore()
 
 const json_data = ref([{
   name: 'Tom',

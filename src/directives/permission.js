@@ -4,7 +4,7 @@ function checkArray(arr) {
 }
 
 const permission = {
-  mounted: function(el, binding) {
+  mounted: function (el, binding) {
     // 获取到 v-permission的值
     const permission = binding.value
     if (permission) {
