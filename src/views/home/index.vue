@@ -23,13 +23,14 @@
       {{ store.otherStoreCount }}
     </div>
     <el-button @click="store.countPlusOneAsync">延时一秒 store的count++</el-button>
+    <readExcel></readExcel>
   </div>
 </template>
 
 <script setup>
 import { ref, onBeforeMount, onMounted } from "vue"
 import { useStore } from "@/store/index.js";
-
+import readExcel from "./readExcel.vue";
 const store = useStore()
 
 const json_data = ref([{
